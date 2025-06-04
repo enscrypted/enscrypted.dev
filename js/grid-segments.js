@@ -1,26 +1,45 @@
 document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('dynamic-grid-segments-container');
-    
-    // --- Helper function (MUST be defined before its first use) ---
+
+    // Helper to generate a random value within a range
     const randomRange = (min, max) => Math.random() * (max - min) + min;
-    // --- END Helper function ---
 
     // --- ADJUSTABLE VALUES ---
-    // Number of lines: Randomize between 125 and 200 each load
-    const minTotalLines = 125;
-    const maxTotalLines = 200;
-    const numLines = Math.floor(randomRange(minTotalLines, maxTotalLines)); // This will be the number of horizontal AND vertical lines
+    // Base density: Adjust this value to control overall line density across all screen sizes.
+    // Higher value = more lines.
+    const baseDensity = 0.0003; 
+    
+    // Variance for number of lines per reload (e.g., 0.15 means +/- 15% of calculated lines)
+    const randomLineCountVariance = 0.15; 
 
-    const lineThickness = 1.5; // Thickness of the lines in pixels (unchanged, for visual clarity)
+    // Max cap for total lines (horizontal + vertical) to prevent overload on very large screens.
+    const maxLinesCap = 400; 
 
-    // Line Lengths: Make them longer on average, allowing some to exceed viewport
-    const minLineLength = 40; // Minimum line segment length (e.g., 40% of viewport)
-    const maxLineLength = 120; // Maximum line segment length (e.g., 120% of viewport, so lines can be longer than the screen)
+    // Minimum number of lines guaranteed, even on very small screens, to maintain visual effect.
+    const minGuaranteedLines = 25; // 25 horizontal + 25 vertical = 50 total minimum
 
-    // Animation Speed: Already set to faster in previous step, keep it this way
+    const lineThickness = 1.5; // Thickness of the lines in pixels
+    const minLineLength = 40; // Minimum line segment length (percentage of viewport)
+    const maxLineLength = 120; // Maximum line segment length (percentage of viewport)
     const minAnimationDuration = 5; // Min seconds for one full loop
     const maxAnimationDuration = 15; // Max seconds for one full loop
     // --- END ADJUSTABLE VALUES ---
+
+    // Calculate a base number of lines responsive to screen area
+    let calculatedBaseLines = (window.innerWidth * window.innerHeight) * baseDensity;
+
+    // Apply random variance to the line count
+    let numLines = Math.floor(calculatedBaseLines * randomRange(1 - randomLineCountVariance, 1 + randomLineCountVariance));
+
+    // Ensure a minimum number of lines for visual effect even on tiny screens
+    numLines = Math.max(numLines, minGuaranteedLines);
+
+    // Ensure we don't exceed the total cap (cap applies to sum of H and V lines, so numLines is for *each* axis)
+    numLines = Math.min(numLines, maxLinesCap / 2); // Divide by 2 because loop creates horizontal and vertical pairs
+
+
+    // Clear any existing lines before creating new ones (good for re-runs during development)
+    container.innerHTML = ''; 
 
     // Create Line Segments
     for (let i = 0; i < numLines; i++) { // Loop 'numLines' times to create a pair of lines (H & V)

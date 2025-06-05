@@ -1,74 +1,51 @@
 body {
     font-family: 'Inter', sans-serif;
-    /* Ensure custom props from Tailwind are available if needed by pure CSS */
     --brand-bg: #F0F4F8;
     --brand-accent1: #0891B2;
     --brand-accent2: #EC4899;
-    --brand-glitch-shadow1: #EC4899; /* theme('colors.brand-glitch-shadow1') */
-    --brand-glitch-shadow2: #0891B2; /* theme('colors.brand-glitch-shadow2') */
-    --brand-text: #1E293B; /* Dark slate blue for primary text */
-    --brand-subtle-text: #475569; /* Medium slate blue */
-    --brand-border: #E2E8F0; /* Light gray border */
-    --brand-surface: #F8FAFC; /* Near white for buttons/elements (added for clarity from Tailwind config) */
-    --brand-accent3: #F59E0B; /* Amber/Bright Yellow */
+    --brand-glitch-shadow1: #EC4899;
+    --brand-glitch-shadow2: #0891B2;
+    --brand-text: #1E293B;
+    --brand-subtle-text: #475569;
+    --brand-border: #E2E8F0;
+    --brand-surface: #F8FAFC;
+    --brand-accent3: #F59E0B;
 }
 
-/* --- NEW DYNAMIC GRID SEGMENTS STYLES --- */
 #dynamic-grid-segments-container {
     position: fixed; /* Fixed to viewport */
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 0; /* Background layer */
+    z-index: 0;
     overflow: hidden; /* Crucial to clip lines when they move off-screen */
-    opacity: 0.7; /* Overall opacity for the grid effect */
-    pointer-events: none; /* Ensures clicks goes through to content */
+    opacity: 0.7;
+    pointer-events: none; /* Ensures clicks go through to content */
 }
 
 .grid-segment {
     position: absolute;
-    background-color: rgba(47, 57, 71, 0.25); /* Line color: subtle dark gray with higher opacity */
-    filter: drop-shadow(0 0 2px var(--brand-accent1)) blur(0.5px); /* Subtle glow and blur */
+    background-color: rgba(47, 57, 71, 0.3);
+    box-shadow: 0 0 3.5px rgba(8, 145, 178, 0.6); /* Cyan glow (brand-accent1) */
     will-change: transform, opacity; /* Optimize animation performance */
-    /* Remove the 'animation' property from here, it will be added by JS-generated classes */
 }
 
-/* Keyframes for horizontal segment movement (these remain the same!) */
+/* Keyframes for horizontal segment movement */
 @keyframes moveSegmentX {
     0% { transform: translateX(0); opacity: 0.2; } /* Start transparent/faint */
     50% { opacity: 1; } /* Fully visible in the middle */
     100% { transform: translateX(calc(100vw + 100%)); opacity: 0.2; } /* Move far off-screen to the right, fade out */
 }
 
-/* Keyframes for vertical segment movement (these remain the same!) */
+/* Keyframes for vertical segment movement */
 @keyframes moveSegmentY {
     0% { transform: translateY(0); opacity: 0.2; } /* Start transparent/faint */
     50% { opacity: 1; } /* Fully visible in the middle */
     100% { transform: translateY(calc(100vh + 100%)); opacity: 0.2; } /* Move far off-screen to the bottom, fade out */
 }
 
-/* These keyframes are automatically picked up if 'animation-direction: reverse' is set */
-@keyframes moveSegmentXReverse {
-    0% { transform: translateX(calc(100vw + 100%)); opacity: 0.2; } /* Start far off-screen right */
-    50% { opacity: 1; }
-    100% { transform: translateX(0); opacity: 0.2; } /* End at screen left, fade out */
-}
-
-@keyframes moveSegmentYReverse {
-    0% { transform: translateY(calc(100vh + 100%)); opacity: 0.2; } /* Start far off-screen bottom */
-    50% { opacity: 1; }
-    100% { transform: translateY(0); opacity: 0.2; } /* End at screen top, fade out */
-}
-
-/* Ensure segments loop correctly for animation-direction: reverse */
-.grid-segment.horizontal[style*="reverse"] {
-    animation: moveSegmentXReverse var(--animation-duration, 20s) linear infinite; /* Custom duration from JS */
-}
-.grid-segment.vertical[style*="reverse"] {
-    animation: moveSegmentYReverse var(--animation-duration, 20s) linear infinite; /* Custom duration from JS */
-}
-
+/* Reverse Keyframes */
 @keyframes moveSegmentXReverse {
     0% { transform: translateX(calc(100vw + 100%)); opacity: 0.2; } /* Start far off-screen right */
     50% { opacity: 1; }
@@ -82,18 +59,16 @@ body {
 }
 
 /* Glitch Effect Styling - Applied via .is-glitching class */
-.glitch-target { /* Base for elements that can glitch */
+.glitch-target {
     position: relative;
     overflow: hidden; /* Crucial to contain pseudo-elements */
-    z-index: 10; /* Keep it above the grid */
-    /* Add a subtle transition for smooth exit from glitch */
+    z-index: 10;
     transition: transform 0.1s ease-out, filter 0.1s ease-out, opacity 0.1s ease-out;
 }
 
 /* Base Glitch Animation for the Container itself */
 .glitch-target.is-glitching {
     animation: glitch-container-effect 0.65s steps(2, end) infinite;
-    /* Apply a very subtle filter for underlying distortion if desired, but rely more on CSS */
     filter: url(#glitch-filter);
 }
 
@@ -109,23 +84,22 @@ body {
     pointer-events: none; /* Allow clicks to pass through */
     overflow: hidden; /* Needed for their own clipping */
     will-change: transform, clip-path, opacity;
-    opacity: 0; /* Hidden by default */
+    opacity: 0;
 }
 
 /* Pseudo-elements for the main glitch target when it's active */
 .glitch-target.is-glitching::before,
 .glitch-target.is-glitching::after {
-    opacity: 1; /* Make visible when glitching */
-    /* They will get their own animation for position/clip, creating the "slice" effect */
+    opacity: 1;
 }
 
 .glitch-target.is-glitching::before {
-    background-color: var(--brand-accent1); /* Cyan overlay */
-    animation: glitch-slice-1 0.65s steps(2, end) infinite reverse; /* Offset animation */
+    background-color: var(--brand-accent1);
+    animation: glitch-slice-1 0.65s steps(2, end) infinite reverse;
 }
 
 .glitch-target.is-glitching::after {
-    background-color: var(--brand-accent2); /* Magenta overlay */
+    background-color: var(--brand-accent2);
     animation: glitch-slice-2 0.65s steps(2, end) infinite;
 }
 
@@ -134,52 +108,52 @@ body {
     0%, 100% {
         transform: translate(0, 0) scale(1);
         filter: url(#glitch-none);
-        clip-path: inset(0 0 0 0); /* Full visibility */
+        clip-path: inset(0 0 0 0);
     }
     10% {
         transform: translate(-3px, 2px) scale(0.99);
         filter: url(#glitch-filter);
-        clip-path: inset(0% 0% 80% 0%); /* Cut off bottom 80% */
+        clip-path: inset(0% 0% 80% 0%);
     }
     20% {
         transform: translate(4px, -1px) scale(1.01);
         filter: url(#glitch-filter);
-        clip-path: inset(20% 0% 0% 0%); /* Cut off top 20% */
+        clip-path: inset(20% 0% 0% 0%);
     }
     30% {
         transform: translate(-2px, 3px) scale(0.98);
         filter: url(#glitch-filter);
-        clip-path: inset(0% 0% 30% 0%); /* Cut off bottom 30% */
+        clip-path: inset(0% 0% 30% 0%);
     }
     40% {
         transform: translate(1px, -4px) scale(1.02);
         filter: url(#glitch-filter);
-        clip-path: inset(40% 0% 0% 0%); /* Cut off top 40% */
+        clip-path: inset(40% 0% 0% 0%);
     }
     50% {
         transform: translate(-3px, 2px) scale(0.99);
         filter: url(#glitch-filter);
-        clip-path: inset(0% 0% 70% 0%); /* Cut off bottom 70% */
+        clip-path: inset(0% 0% 70% 0%);
     }
     60% {
         transform: translate(2px, -3px) scale(1.01);
         filter: url(#glitch-filter);
-        clip-path: inset(10% 0% 0% 0%); /* Cut off top 10% */
+        clip-path: inset(10% 0% 0% 0%);
     }
     70% {
         transform: translate(-4px, 1px) scale(0.98);
         filter: url(#glitch-filter);
-        clip-path: inset(0% 0% 50% 0%); /* Cut off bottom 50% */
+        clip-path: inset(0% 0% 50% 0%);
     }
     80% {
         transform: translate(3px, -2px) scale(1.02);
         filter: url(#glitch-filter);
-        clip-path: inset(60% 0% 0% 0%); /* Cut off top 60% */
+        clip-path: inset(60% 0% 0% 0%);
     }
     90% {
         transform: translate(-1px, 1px) scale(0.99);
         filter: url(#glitch-filter);
-        clip-path: inset(0 0 0 0); /* Full visibility */
+        clip-path: inset(0 0 0 0);
     }
 }
 
@@ -188,11 +162,11 @@ body {
     0%, 100% {
         transform: translate(0, 0) skewX(0deg);
         clip-path: inset(0 0 0 0);
-        opacity: 1; /* Always visible during glitch for effect */
+        opacity: 1;
     }
     10% {
         transform: translate(-6px, -3px) skewX(15deg);
-        clip-path: inset(5% 0 75% 0); /* Smaller, shifted slice */
+        clip-path: inset(5% 0 75% 0);
     }
     20% {
         transform: translate(8px, 2px) skewX(-10deg);
@@ -232,7 +206,7 @@ body {
     0%, 100% {
         transform: translate(0, 0) skewX(0deg);
         clip-path: inset(0 0 0 0);
-        opacity: 1; /* Always visible during glitch for effect */
+        opacity: 1;
     }
     10% {
         transform: translate(5px, 2px) skewX(-12deg);
@@ -272,7 +246,7 @@ body {
     }
 }
 
-/* Text Shadow Glitch (for text elements *within_ a glitching container) */
+/* Text Shadow Glitch (for text elements *within* a glitching container) */
 @keyframes glitch-text-shadow-active {
     0%, 100% { text-shadow: none; }
     5% { text-shadow: -1px -1px 0 var(--brand-glitch-shadow1), 1px 1px 0 var(--brand-glitch-shadow2); }
@@ -293,26 +267,26 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: rgba(255, 255, 255, 0.85); /* White surface with slight transparency */
-    border: 1px solid var(--brand-border); /* Lighter border - theme('colors.brand-border') equivalent */
+    background-color: rgba(255, 255, 255, 0.85);
+    border: 1px solid var(--brand-border);
     padding: 1rem 1.5rem;
-    border-radius: 0.375rem; /* Slightly more rounded for a softer feel on light bg */
+    border-radius: 0.375rem;
     transition: all 0.25s ease-in-out;
     position: relative;
     overflow: hidden; /* Important for containing glitch pseudo-elements */
-    backdrop-filter: blur(5px); /* Subtle blur for depth */
+    backdrop-filter: blur(5px);
     box-shadow: 0 2px 4px rgba(20, 30, 40, 0.05), 0 4px 10px rgba(20, 30, 40, 0.03);
-    will-change: transform, box-shadow, border-color; /* Optimize for hover animations */
+    will-change: transform, box-shadow, border-color;
 }
 
 .tech-link-card::before { /* Angled accent element */
     content: '';
     position: absolute;
     top: 0;
-    left: -60px; /* Start further off-screen */
+    left: -60px;
     width: 40px;
     height: 100%;
-    background-color: var(--brand-accent1); /* Cyan */
+    background-color: var(--brand-accent1);
     transform: skewX(-20deg);
     transition: left 0.35s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 0.3s;
     opacity: 0;
@@ -322,12 +296,12 @@ body {
     content: '';
     position: absolute;
     top:0;
-    right: -60px; /* Start off-screen from other side */
+    right: -60px;
     width: 40px;
     height: 100%;
-    background-color: var(--brand-accent2); /* Magenta */
+    background-color: var(--brand-accent2);
     transform: skewX(-20deg);
-    transition: right 0.35s cubic-bezier(0.25, 0.1, 0.25, 1) 0.05s, opacity 0.3s 0.05s; /* Slight delay */
+    transition: right 0.35s cubic-bezier(0.25, 0.1, 0.25, 1) 0.05s, opacity 0.3s 0.05s;
     opacity: 0;
     z-index: 0;
 }
@@ -358,7 +332,7 @@ body {
 }
 
 .tech-link-icon {
-    color: var(--brand-accent1); /* Cyan */
+    color: var(--brand-accent1);
     width: 22px;
     height: 22px;
     flex-shrink: 0;
@@ -367,25 +341,25 @@ body {
 
 .tech-link-card:hover .tech-link-icon {
     transform: scale(1.15) rotate(-3deg);
-    color: var(--brand-accent2); /* Changes to Magenta on hover */
+    color: var(--brand-accent2);
 }
 
 .tech-link-title {
     font-family: 'Fira Code', monospace;
     font-size: 1.125rem;
     font-weight: 500;
-    color: var(--brand-text); /* Dark text */
+    color: var(--brand-text);
     transition: color 0.3s ease;
 }
 
 .tech-link-card:hover .tech-link-title {
-    color: var(--brand-accent1); /* Cyan on hover */
+    color: var(--brand-accent1);
 }
 
 .tech-link-desc {
     font-family: 'Inter', sans-serif;
     font-size: 0.875rem;
-    color: var(--brand-subtle-text); /* Medium dark text */
+    color: var(--brand-subtle-text);
     display: none;
 }
 
@@ -405,22 +379,18 @@ body {
 }
 
 .tech-link-card:hover .tech-link-arrow {
-    color: var(--brand-accent3); /* Amber/Yellow arrow on hover */
+    color: var(--brand-accent3);
     transform: translateX(6px) scale(1.1);
 }
 
 /* Placeholder page styling */
-.placeholder-content {
-    /* Styles for the "More coming soon!" message container, if needed later */
-}
-
 .placeholder-content h1 {
     color: var(--brand-text);
 }
 .placeholder-content p {
     color: var(--brand-subtle-text);
 }
-.placeholder-content a { /* Style the back to home button */
+.placeholder-content a {
     background-color: var(--brand-accent1);
     color: var(--brand-surface);
 }

@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const maxLinesCap = 200; 
     const minGuaranteedLines = 30; 
     
-    const lineThickness = 1.75; // Increased line thickness from 1.5 to 2 pixels
+    const lineThickness = 1.75;
     
     const minLineLength = 40;
     const maxLineLength = 120;

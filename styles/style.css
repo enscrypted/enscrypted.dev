@@ -23,30 +23,42 @@ body {
     z-index: 0; /* Background layer */
     overflow: hidden; /* Crucial to clip lines when they move off-screen */
     opacity: 0.7; /* Overall opacity for the grid effect */
-    pointer-events: none; /* Ensures clicks go through to content */
+    pointer-events: none; /* Ensures clicks goes through to content */
 }
 
 .grid-segment {
     position: absolute;
     background-color: rgba(47, 57, 71, 0.25); /* Line color: subtle dark gray with higher opacity */
     filter: drop-shadow(0 0 2px var(--brand-accent1)) blur(0.5px); /* Subtle glow and blur */
-    /* You can add mix-blend-mode: screen; here if you want overlapping lines to become brighter,
-       but test it carefully as it can reduce overall visibility on light backgrounds. */
     will-change: transform, opacity; /* Optimize animation performance */
+    /* Remove the 'animation' property from here, it will be added by JS-generated classes */
 }
 
-/* Keyframes for horizontal segment movement */
+/* Keyframes for horizontal segment movement (these remain the same!) */
 @keyframes moveSegmentX {
     0% { transform: translateX(0); opacity: 0.2; } /* Start transparent/faint */
     50% { opacity: 1; } /* Fully visible in the middle */
     100% { transform: translateX(calc(100vw + 100%)); opacity: 0.2; } /* Move far off-screen to the right, fade out */
 }
 
-/* Keyframes for vertical segment movement */
+/* Keyframes for vertical segment movement (these remain the same!) */
 @keyframes moveSegmentY {
     0% { transform: translateY(0); opacity: 0.2; } /* Start transparent/faint */
     50% { opacity: 1; } /* Fully visible in the middle */
     100% { transform: translateY(calc(100vh + 100%)); opacity: 0.2; } /* Move far off-screen to the bottom, fade out */
+}
+
+/* These keyframes are automatically picked up if 'animation-direction: reverse' is set */
+@keyframes moveSegmentXReverse {
+    0% { transform: translateX(calc(100vw + 100%)); opacity: 0.2; } /* Start far off-screen right */
+    50% { opacity: 1; }
+    100% { transform: translateX(0); opacity: 0.2; } /* End at screen left, fade out */
+}
+
+@keyframes moveSegmentYReverse {
+    0% { transform: translateY(calc(100vh + 100%)); opacity: 0.2; } /* Start far off-screen bottom */
+    50% { opacity: 1; }
+    100% { transform: translateY(0); opacity: 0.2; } /* End at screen top, fade out */
 }
 
 /* Ensure segments loop correctly for animation-direction: reverse */
@@ -69,8 +81,6 @@ body {
     100% { transform: translateY(0); opacity: 0.2; } /* End at screen top, fade out */
 }
 
-
-/* --- REST OF YOUR EXISTING CSS (GLITCH EFFECT, TECH CARDS, ETC.) --- */
 /* Glitch Effect Styling - Applied via .is-glitching class */
 .glitch-target { /* Base for elements that can glitch */
     position: relative;

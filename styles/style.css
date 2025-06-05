@@ -27,7 +27,6 @@ body {
 .grid-segment {
     position: absolute;
     background-color: rgba(47, 57, 71, 0.3);
-    box-shadow: 0 0 3.5px rgba(8, 145, 178, 0.6); /* Cyan glow (brand-accent1) */
     will-change: transform, opacity; /* Optimize animation performance */
 }
 

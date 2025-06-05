@@ -8,9 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const baseDensity = 0.0001; 
     const randomLineCountVariance = 0.15; 
     const maxLinesCap = 200; 
-    const minGuaranteedLines = 40; 
+    const minGuaranteedLines = 30; 
     
-    const lineThickness = 1.75; // Increased line thickness from 1.5 to 2 pixels
+    const lineThickness = 2.25; // Increased line thickness from 1.5 to 2 pixels
     
     const minLineLength = 40;
     const maxLineLength = 120;

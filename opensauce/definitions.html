@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Definitions | Open Sauce</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js" integrity="sha512-u3fPA7V8qQmhBPNT5quvaXVa1mnnLSXUep5PS1qo5NRzHwG19aHmNJnj1Q8hpA/iksyLKGVAxuKL32iXW7PAoQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="../js/tailwind.config.js"></script>
+</head>
+<body class="bg-brand-bg text-brand-text font-sans antialiased">
+    <div id="constellation-bg"></div>
+    
+    <div class="relative z-10 container mx-auto p-4 sm:p-8">
+        <header class="text-center my-8 no-print">
+            <a href="../opensauce.html" class="mb-8 inline-block text-brand-accent1 hover:text-brand-accent2 font-mono transition-colors">&larr; Back to Open Sauce Info</a>
+        </header>
+
+        <div class="max-w-4xl mx-auto py-12 px-4">
+            <div class="text-center">
+                <h1 class="text-4xl sm:text-5xl font-mono font-bold tracking-tight">Acronyms & <span class="text-brand-accent1">Definitions</span></h1>
+                <p class="mt-4 text-lg text-brand-subtle-text">A glossary of terms used in the cZip project.</p>
+            </div>
+            
+            <div class="mt-12 p-8 bg-brand-surface/80 backdrop-blur-sm border border-brand-border rounded-lg shadow-xl">
+                <dl class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                    
+                    <div class="py-2">
+                        <dt class="text-xl font-mono font-bold text-brand-text">AEAD</dt>
+                        <dd class="mt-1 text-brand-subtle-text text-lg">
+                            <strong class="text-brand-text/80">Authenticated Encryption with Associated Data.</strong> A form of encryption that simultaneously provides confidentiality, integrity, and authenticity. AURA uses an AEAD scheme to cryptographically bind the hidden data to the cover image itself.
+                        </dd>
+                    </div>
+
+                    <div class="py-2">
+                        <dt class="text-xl font-mono font-bold text-brand-text">AES</dt>
+                        <dd class="mt-1 text-brand-subtle-text text-lg">
+                            <strong class="text-brand-text/80">Advanced Encryption Standard.</strong> A secure and widely adopted symmetric encryption algorithm. cZip uses AES-256 as its recommended encryption method.
+                        </dd>
+                    </div>
+
+                    <div class="py-2">
+                        <dt class="text-xl font-mono font-bold text-brand-text">API</dt>
+                        <dd class="mt-1 text-brand-subtle-text text-lg">
+                            <strong class="text-brand-text/80">Application Programming Interface.</strong> A set of rules and definitions that allows different software applications to communicate with each other. The AURA library provides an API for cZip to use.
+                        </dd>
+                    </div>
+
+                    <div class="py-2">
+                        <dt class="text-xl font-mono font-bold text-brand-text">AURA</dt>
+                        <dd class="mt-1 text-brand-subtle-text text-lg">
+                            <strong class="text-brand-text/80">Authenticated Unified Raster Algorithm.</strong> The proprietary, high-security steganography protocol developed for cZip.
+                        </dd>
+                    </div>
+
+                     <div class="py-2">
+                        <dt class="text-xl font-mono font-bold text-brand-text">CSPRNG</dt>
+                        <dd class="mt-1 text-brand-subtle-text text-lg">
+                            <strong class="text-brand-text/80">Cryptographically Secure Pseudo-Random Number Generator.</strong> An algorithm for generating random numbers that is suitable for use in cryptography. AURA uses a ChaCha20-based CSPRNG to generate a secret pixel path.
+                        </dd>
+                    </div>
+
+                    <div class="py-2">
+                        <dt class="text-xl font-mono font-bold text-brand-text">GUI</dt>
+                        <dd class="mt-1 text-brand-subtle-text text-lg">
+                            <strong class="text-brand-text/80">Graphical User Interface.</strong> A visual way of interacting with a computer, using elements like windows, icons, and buttons. cZip is a GUI application built with Qt5.
+                        </dd>
+                    </div>
+
+                    <div class="py-2">
+                        <dt class="text-xl font-mono font-bold text-brand-text">HKDF</dt>
+                        <dd class="mt-1 text-brand-subtle-text text-lg">
+                            <strong class="text-brand-text/80">HMAC-based Key Derivation Function.</strong> A standard method for deriving one or more secret keys from a single master key or password. AURA uses HKDF-SHA512 for its secure key expansion.
+                        </dd>
+                    </div>
+                    
+                    <div class="py-2">
+                        <dt class="text-xl font-mono font-bold text-brand-text">HMAC</dt>
+                        <dd class="mt-1 text-brand-subtle-text text-lg">
+                            <strong class="text-brand-text/80">Hash-based Message Authentication Code.</strong> A cryptographic construction used to verify both the data integrity and authenticity of a message. AURA uses HMAC-SHA512.
+                        </dd>
+                    </div>
+
+                    <div class="py-2">
+                        <dt class="text-xl font-mono font-bold text-brand-text">IV</dt>
+                        <dd class="mt-1 text-brand-subtle-text text-lg">
+                            <strong class="text-brand-text/80">Initialization Vector.</strong> A random or pseudo-random number used with a secret key to ensure that encrypting the same message multiple times results in a unique ciphertext each time.
+                        </dd>
+                    </div>
+                    
+                    <div class="py-2">
+                        <dt class="text-xl font-mono font-bold text-brand-text">LSB</dt>
+                        <dd class="mt-1 text-brand-subtle-text text-lg">
+                            <strong class="text-brand-text/80">Least Significant Bit.</strong> The bit in a binary number that has the lowest value (the rightmost bit). LSB steganography works by overwriting this bit in the color data of an image's pixels.
+                        </dd>
+                    </div>
+
+                    <div class="py-2">
+                        <dt class="text-xl font-mono font-bold text-brand-text">QCA</dt>
+                        <dd class="mt-1 text-brand-subtle-text text-lg">
+                            <strong class="text-brand-text/80">Qt Cryptographic Architecture.</strong> A framework that provides cryptographic APIs for Qt applications. cZip uses it for its AES-256 implementation.
+                        </dd>
+                    </div>
+
+                    <div class="py-2">
+                        <dt class="text-xl font-mono font-bold text-brand-text">SHA</dt>
+                        <dd class="mt-1 text-brand-subtle-text text-lg">
+                            <strong class="text-brand-text/80">Secure Hash Algorithm.</strong> A family of cryptographic hash functions used to produce a unique "fingerprint" of a piece of data.
+                        </dd>
+                    </div>
+
+                </dl>
+            </div>
+        </div>
+
+        <div id="qr-code-container">
+            <div class="p-2 bg-white rounded-md shadow-2xl">
+                <img id="qr-code" src="" alt="QR Code linking to this page">
+            </div>
+        </div>
+    </div>
+    <script src="../js/theme.js"></script>
+    <script src="../js/print_view.js"></script>
+    <script src="../js/constellation.js"></script>
+</body>
+</html>

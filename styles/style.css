@@ -1,93 +1,95 @@
-body {
-    font-family: 'Inter', sans-serif;
-    --brand-bg: #F0F4F8;
-    --brand-accent1: #0891B2;
-    --brand-accent2: #EC4899;
-    --brand-glitch-shadow1: #EC4899;
-    --brand-glitch-shadow2: #0891B2;
-    --brand-text: #1E293B;
-    --brand-subtle-text: #475569;
-    --brand-border: #E2E8F0;
-    --brand-surface: #F8FAFC;
-    --brand-accent3: #F59E0B;
+:root {
+    /* --- Light Theme Colors (Default) --- */
+    --brand-bg: #F0F4F8;                  /* Very light cool gray */
+    --brand-surface: #FFFFFF;             /* White for card surfaces */
+    --brand-text: #1E293B;                /* Dark slate blue for primary text */
+    --brand-subtle-text: #475569;          /* Medium slate blue */
+    --brand-border: #CBD5E1;              /* Light gray border */
+    --brand-accent1: #0891B2;              /* Vibrant Cyan */
+    --brand-accent2: #EC4899;              /* Vibrant Pink/Magenta */
+    --brand-accent3: #F59E0B;              /* Amber/Bright Yellow */
+    --brand-glitch-shadow1: #EC4899;       /* Pink/Magenta for glitch effect */
+    --brand-glitch-shadow2: #0891B2;       /* Cyan for glitch effect */
 }
 
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--brand-bg);
+    color: var(--brand-text);
+}
+
+/* container for the animated background grid lines */
 #dynamic-grid-segments-container {
-    position: fixed; /* Fixed to viewport */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     z-index: 0;
-    overflow: hidden; /* Crucial to clip lines when they move off-screen */
+    overflow: hidden;
     opacity: 0.7;
-    pointer-events: none; /* Ensures clicks go through to content */
+    pointer-events: none;
 }
 
 .grid-segment {
     position: absolute;
     background-color: rgba(47, 57, 71, 0.3);
-    box-shadow: 0 0 3.5px rgba(8, 145, 178, 0.6); /* Cyan glow (brand-accent1) */
-    will-change: transform, opacity; /* Optimize animation performance */
+    box-shadow: 0 0 3.5px rgba(8, 145, 178, 0.6);
+    will-change: transform, opacity;
 }
 
-/* Keyframes for horizontal segment movement */
 @keyframes moveSegmentX {
-    0% { transform: translateX(0); opacity: 0.2; } /* Start transparent/faint */
-    50% { opacity: 1; } /* Fully visible in the middle */
-    100% { transform: translateX(calc(100vw + 100%)); opacity: 0.2; } /* Move far off-screen to the right, fade out */
-}
-
-/* Keyframes for vertical segment movement */
-@keyframes moveSegmentY {
-    0% { transform: translateY(0); opacity: 0.2; } /* Start transparent/faint */
-    50% { opacity: 1; } /* Fully visible in the middle */
-    100% { transform: translateY(calc(100vh + 100%)); opacity: 0.2; } /* Move far off-screen to the bottom, fade out */
-}
-
-/* Reverse Keyframes */
-@keyframes moveSegmentXReverse {
-    0% { transform: translateX(calc(100vw + 100%)); opacity: 0.2; } /* Start far off-screen right */
+    0% { transform: translateX(0); opacity: 0.2; }
     50% { opacity: 1; }
-    100% { transform: translateX(0); opacity: 0.2; } /* End at screen left, fade out */
+    100% { transform: translateX(calc(100vw + 100%)); opacity: 0.2; }
+}
+
+@keyframes moveSegmentY {
+    0% { transform: translateY(0); opacity: 0.2; }
+    50% { opacity: 1; }
+    100% { transform: translateY(calc(100vh + 100%)); opacity: 0.2; }
+}
+
+@keyframes moveSegmentXReverse {
+    0% { transform: translateX(calc(100vw + 100%)); opacity: 0.2; }
+    50% { opacity: 1; }
+    100% { transform: translateX(0); opacity: 0.2; }
 }
 
 @keyframes moveSegmentYReverse {
-    0% { transform: translateY(calc(100vh + 100%)); opacity: 0.2; } /* Start far off-screen bottom */
+    0% { transform: translateY(calc(100vh + 100%)); opacity: 0.2; }
     50% { opacity: 1; }
-    100% { transform: translateY(0); opacity: 0.2; } /* End at screen top, fade out */
+    100% { transform: translateY(0); opacity: 0.2; }
 }
 
-/* Glitch Effect Styling - Applied via .is-glitching class */
+/* main container for any element that receives the glitch effect */
 .glitch-target {
     position: relative;
-    overflow: hidden; /* Crucial to contain pseudo-elements */
+    overflow: hidden;
     z-index: 10;
     transition: transform 0.1s ease-out, filter 0.1s ease-out, opacity 0.1s ease-out;
 }
 
-/* Base Glitch Animation for the Container itself */
 .glitch-target.is-glitching {
     animation: glitch-container-effect 0.65s steps(2, end) infinite;
     filter: url(#glitch-filter);
 }
 
-/* Pseudo-elements for the cutting/shearing effect and chromatic aberration */
+/* pseudo-elements used for the colored "slice" and "shear" overlays */
 .glitch-target::before,
 .glitch-target::after {
-    content: ''; 
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none; /* Allow clicks to pass through */
-    overflow: hidden; /* Needed for their own clipping */
+    pointer-events: none;
+    overflow: hidden;
     will-change: transform, clip-path, opacity;
     opacity: 0;
 }
 
-/* Pseudo-elements for the main glitch target when it's active */
 .glitch-target.is-glitching::before,
 .glitch-target.is-glitching::after {
     opacity: 1;
@@ -103,150 +105,48 @@ body {
     animation: glitch-slice-2 0.65s steps(2, end) infinite;
 }
 
-/* New: Main container glitch animation - combines movement and clipping */
+/* animates the container itself with small movements and clip-path changes */
 @keyframes glitch-container-effect {
-    0%, 100% {
-        transform: translate(0, 0) scale(1);
-        filter: url(#glitch-none);
-        clip-path: inset(0 0 0 0);
-    }
-    10% {
-        transform: translate(-3px, 2px) scale(0.99);
-        filter: url(#glitch-filter);
-        clip-path: inset(0% 0% 80% 0%);
-    }
-    20% {
-        transform: translate(4px, -1px) scale(1.01);
-        filter: url(#glitch-filter);
-        clip-path: inset(20% 0% 0% 0%);
-    }
-    30% {
-        transform: translate(-2px, 3px) scale(0.98);
-        filter: url(#glitch-filter);
-        clip-path: inset(0% 0% 30% 0%);
-    }
-    40% {
-        transform: translate(1px, -4px) scale(1.02);
-        filter: url(#glitch-filter);
-        clip-path: inset(40% 0% 0% 0%);
-    }
-    50% {
-        transform: translate(-3px, 2px) scale(0.99);
-        filter: url(#glitch-filter);
-        clip-path: inset(0% 0% 70% 0%);
-    }
-    60% {
-        transform: translate(2px, -3px) scale(1.01);
-        filter: url(#glitch-filter);
-        clip-path: inset(10% 0% 0% 0%);
-    }
-    70% {
-        transform: translate(-4px, 1px) scale(0.98);
-        filter: url(#glitch-filter);
-        clip-path: inset(0% 0% 50% 0%);
-    }
-    80% {
-        transform: translate(3px, -2px) scale(1.02);
-        filter: url(#glitch-filter);
-        clip-path: inset(60% 0% 0% 0%);
-    }
-    90% {
-        transform: translate(-1px, 1px) scale(0.99);
-        filter: url(#glitch-filter);
-        clip-path: inset(0 0 0 0);
-    }
+    0%, 100% { transform: translate(0, 0) scale(1); filter: url(#glitch-none); clip-path: inset(0 0 0 0); }
+    10% { transform: translate(-3px, 2px) scale(0.99); filter: url(#glitch-filter); clip-path: inset(0% 0% 80% 0%); }
+    20% { transform: translate(4px, -1px) scale(1.01); filter: url(#glitch-filter); clip-path: inset(20% 0% 0% 0%); }
+    30% { transform: translate(-2px, 3px) scale(0.98); filter: url(#glitch-filter); clip-path: inset(0% 0% 30% 0%); }
+    40% { transform: translate(1px, -4px) scale(1.02); filter: url(#glitch-filter); clip-path: inset(40% 0% 0% 0%); }
+    50% { transform: translate(-3px, 2px) scale(0.99); filter: url(#glitch-filter); clip-path: inset(0% 0% 70% 0%); }
+    60% { transform: translate(2px, -3px) scale(1.01); filter: url(#glitch-filter); clip-path: inset(10% 0% 0% 0%); }
+    70% { transform: translate(-4px, 1px) scale(0.98); filter: url(#glitch-filter); clip-path: inset(0% 0% 50% 0%); }
+    80% { transform: translate(3px, -2px) scale(1.02); filter: url(#glitch-filter); clip-path: inset(60% 0% 0% 0%); }
+    90% { transform: translate(-1px, 1px) scale(0.99); filter: url(#glitch-filter); clip-path: inset(0 0 0 0); }
 }
 
-/* Slice animation for pseudo-elements (the colored ghost slices) */
+/* controls the movement and clipping of the colored pseudo-element overlays */
 @keyframes glitch-slice-1 {
-    0%, 100% {
-        transform: translate(0, 0) skewX(0deg);
-        clip-path: inset(0 0 0 0);
-        opacity: 1;
-    }
-    10% {
-        transform: translate(-6px, -3px) skewX(15deg);
-        clip-path: inset(5% 0 75% 0);
-    }
-    20% {
-        transform: translate(8px, 2px) skewX(-10deg);
-        clip-path: inset(15% 0 65% 0);
-    }
-    30% {
-        transform: translate(-4px, 5px) skewX(12deg);
-        clip-path: inset(25% 0 55% 0);
-    }
-    40% {
-        transform: translate(10px, -4px) skewX(-18deg);
-        clip-path: inset(35% 0 45% 0);
-    }
-    50% {
-        transform: translate(-7px, 2px) skewX(10deg);
-        clip-path: inset(45% 0 35% 0);
-    }
-    60% {
-        transform: translate(5px, -3px) skewX(-13deg);
-        clip-path: inset(55% 0 25% 0);
-    }
-    70% {
-        transform: translate(-9px, 4px) skewX(16deg);
-        clip-path: inset(65% 0 15% 0);
-    }
-    80% {
-        transform: translate(6px, -1px) skewX(-9deg);
-        clip-path: inset(75% 0 5% 0);
-    }
-    90% {
-        transform: translate(-3px, 1px) skewX(7deg);
-        clip-path: inset(0 0 0 0);
-    }
+    0%, 100% { transform: translate(0, 0) skewX(0deg); clip-path: inset(0 0 0 0); opacity: 1; }
+    10% { transform: translate(-6px, -3px) skewX(15deg); clip-path: inset(5% 0 75% 0); }
+    20% { transform: translate(8px, 2px) skewX(-10deg); clip-path: inset(15% 0 65% 0); }
+    30% { transform: translate(-4px, 5px) skewX(12deg); clip-path: inset(25% 0 55% 0); }
+    40% { transform: translate(10px, -4px) skewX(-18deg); clip-path: inset(35% 0 45% 0); }
+    50% { transform: translate(-7px, 2px) skewX(10deg); clip-path: inset(45% 0 35% 0); }
+    60% { transform: translate(5px, -3px) skewX(-13deg); clip-path: inset(55% 0 25% 0); }
+    70% { transform: translate(-9px, 4px) skewX(16deg); clip-path: inset(65% 0 15% 0); }
+    80% { transform: translate(6px, -1px) skewX(-9deg); clip-path: inset(75% 0 5% 0); }
+    90% { transform: translate(-3px, 1px) skewX(7deg); clip-path: inset(0 0 0 0); }
 }
 
 @keyframes glitch-slice-2 {
-    0%, 100% {
-        transform: translate(0, 0) skewX(0deg);
-        clip-path: inset(0 0 0 0);
-        opacity: 1;
-    }
-    10% {
-        transform: translate(5px, 2px) skewX(-12deg);
-        clip-path: inset(10% 0 80% 0);
-    }
-    20% {
-        transform: translate(-7px, -3px) skewX(10deg);
-        clip-path: inset(20% 0 70% 0);
-    }
-    30% {
-        transform: translate(9px, 4px) skewX(-16deg);
-        clip-path: inset(30% 0 60% 0);
-    }
-    40% {
-        transform: translate(-6px, 1px) skewX(14deg);
-        clip-path: inset(40% 0 50% 0);
-    }
-    50% {
-        transform: translate(4px, -3px) skewX(-11deg);
-        clip-path: inset(50% 0 40% 0);
-    }
-    60% {
-        transform: translate(-8px, 2px) skewX(17deg);
-        clip-path: inset(60% 0 30% 0);
-    }
-    70% {
-        transform: translate(7px, -1px) skewX(-10deg);
-        clip-path: inset(70% 0 20% 0);
-    }
-    80% {
-        transform: translate(-5px, 3px) skewX(13deg);
-        clip-path: inset(80% 0 10% 0);
-    }
-    90% {
-        transform: translate(3px, 0px) skewX(-8deg);
-        clip-path: inset(0 0 0 0);
-    }
+    0%, 100% { transform: translate(0, 0) skewX(0deg); clip-path: inset(0 0 0 0); opacity: 1; }
+    10% { transform: translate(5px, 2px) skewX(-12deg); clip-path: inset(10% 0 80% 0); }
+    20% { transform: translate(-7px, -3px) skewX(10deg); clip-path: inset(20% 0 70% 0); }
+    30% { transform: translate(9px, 4px) skewX(-16deg); clip-path: inset(30% 0 60% 0); }
+    40% { transform: translate(-6px, 1px) skewX(14deg); clip-path: inset(40% 0 50% 0); }
+    50% { transform: translate(4px, -3px) skewX(-11deg); clip-path: inset(50% 0 40% 0); }
+    60% { transform: translate(-8px, 2px) skewX(17deg); clip-path: inset(60% 0 30% 0); }
+    70% { transform: translate(7px, -1px) skewX(-10deg); clip-path: inset(70% 0 20% 0); }
+    80% { transform: translate(-5px, 3px) skewX(13deg); clip-path: inset(80% 0 10% 0); }
+    90% { transform: translate(3px, 0px) skewX(-8deg); clip-path: inset(0 0 0 0); }
 }
 
-/* Text Shadow Glitch (for text elements *within* a glitching container) */
+/* creates the chromatic aberration text shadow effect */
 @keyframes glitch-text-shadow-active {
     0%, 100% { text-shadow: none; }
     5% { text-shadow: -1px -1px 0 var(--brand-glitch-shadow1), 1px 1px 0 var(--brand-glitch-shadow2); }
@@ -261,25 +161,24 @@ body {
     95% { text-shadow: 1px 1px 0 var(--brand-glitch-shadow2), -1px -1px 0 var(--brand-glitch-shadow1); }
 }
 
-
-/* Tech Link Card Styling - Updated for brighter theme */
 .tech-link-card {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: rgba(255, 255, 255, 0.85);
+    background-color: var(--brand-surface);
     border: 1px solid var(--brand-border);
     padding: 1rem 1.5rem;
     border-radius: 0.375rem;
     transition: all 0.25s ease-in-out;
     position: relative;
-    overflow: hidden; /* Important for containing glitch pseudo-elements */
+    overflow: hidden;
     backdrop-filter: blur(5px);
     box-shadow: 0 2px 4px rgba(20, 30, 40, 0.05), 0 4px 10px rgba(20, 30, 40, 0.03);
     will-change: transform, box-shadow, border-color;
 }
 
-.tech-link-card::before { /* Angled accent element */
+/* pseudo-elements that create the angled accent hover effect */
+.tech-link-card::before {
     content: '';
     position: absolute;
     top: 0;
@@ -292,7 +191,7 @@ body {
     opacity: 0;
     z-index: 0;
 }
-.tech-link-card::after { /* Second angled accent for more color */
+.tech-link-card::after {
     content: '';
     position: absolute;
     top:0;
@@ -305,7 +204,6 @@ body {
     opacity: 0;
     z-index: 0;
 }
-
 
 .tech-link-card:hover::before {
     left: -15px;
@@ -363,7 +261,7 @@ body {
     display: none;
 }
 
-@media (min-width: 640px) { /* sm breakpoint */
+@media (min-width: 640px) {
     .tech-link-desc {
         display: inline;
     }
@@ -383,7 +281,6 @@ body {
     transform: translateX(6px) scale(1.1);
 }
 
-/* Placeholder page styling */
 .placeholder-content h1 {
     color: var(--brand-text);
 }
@@ -396,4 +293,79 @@ body {
 }
 .placeholder-content a:hover {
     background-color: var(--brand-accent2);
+}
+
+html.dark {
+    /* --- Dark "Hacker" Theme --- */
+    --brand-bg: #0A0A0A;                  /* Near black background */
+    --brand-surface: #1A1A1A;              /* Dark gray for cards */
+    --brand-text: #00FF41;                /* Bright green text */
+    --brand-subtle-text: #00B32C;          /* Dimmer green text */
+    --brand-border: #2A2A2A;               /* Dark border */
+    --brand-accent1: #00FF41;               /* Accent is also bright green */
+    --brand-accent2: #39FF14;               /* A slightly different green for variety */
+    --brand-accent3: #BBF7D0;               /* A very light green for contrast */
+    --brand-glitch-shadow1: #00FF41;       /* Glitch effect color */
+    --brand-glitch-shadow2: #39FF14;       /* Glitch effect color */
+}
+
+html.dark .tech-link-card {
+    background-color: rgba(26, 26, 26, 0.7);
+    box-shadow: none;
+}
+
+/* override that creates the "hollow" grid line effect in dark mode */
+html.dark .grid-segment {
+    background-color: rgba(0, 255, 65, 0.1);    /* faint green fill */
+    box-shadow: 0 0 4px var(--brand-accent1);    /* bright green glow */
+}
+
+#constellation-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.tech-glyph {
+    position: absolute;
+    color: var(--brand-accent1); /* default glyph color for light mode */
+    transition: color 0.3s ease-in-out;
+}
+
+/* the svg inside the glyph div will inherit its color */
+.tech-glyph {
+    position: absolute;
+    transition: color 0.3s ease-in-out;
+}
+
+.content-wrapper {
+    background: radial-gradient(circle, var(--brand-bg) 50%, transparent 80%);
+}
+
+html.dark .content-wrapper {
+     background: radial-gradient(circle, var(--brand-bg) 50%, transparent 80%);
+}
+
+#qr-code-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.print-view-active #qr-code-container {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.print-view-active .no-print {
+    display: none;
 }

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cZip Tech Stack | Open Sauce</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js" integrity="sha512-u3fPA7V8qQmhBPNT5quvaXVa1mnnLSXUep5PS1qo5NRzHwG19aHmNJnj1Q8hpA/iksyLKGVAxuKL32iXW7PAoQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="../js/tailwind.config.js"></script>
+</head>
+<body class="bg-brand-bg text-brand-text font-sans antialiased">
+    <div id="constellation-bg"></div>
+    
+    <div class="relative z-10 container mx-auto p-4 sm:p-8">
+        <header class="text-center my-8 no-print">
+            <a href="../opensauce.html" class="mb-8 inline-block text-brand-accent1 hover:text-brand-accent2 font-mono transition-colors">&larr; Back to Open Sauce Info</a>
+        </header>
+
+        <div class="max-w-4xl mx-auto py-12 px-4">
+            <div class="text-center">
+                <h1 class="text-4xl sm:text-5xl font-mono font-bold tracking-tight">cZip: The <span class="text-brand-accent1">Tech Stack</span></h1>
+                <p class="mt-4 text-lg text-brand-subtle-text">The Right Tools for Performance, Security, and Portability.</p>
+            </div>
+            
+            <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="p-6 bg-brand-surface/80 backdrop-blur-sm border border-brand-border rounded-lg shadow-xl">
+                    <i class="fa-brands fa-cuttlefish text-3xl text-brand-accent2 mb-3"></i>
+                    <h3 class="text-xl font-mono font-bold text-brand-text">C++17</h3>
+                    <p class="mt-1 text-brand-subtle-text">Chosen for performance-critical, low-level memory and bit manipulation.</p>
+                </div>
+                <div class="p-6 bg-brand-surface/80 backdrop-blur-sm border border-brand-border rounded-lg shadow-xl">
+                    <i class="fa-brands fa-quinscape text-3xl text-brand-accent2 mb-3"></i>
+                    <h3 class="text-xl font-mono font-bold text-brand-text">Qt 5</h3>
+                    <p class="mt-1 text-brand-subtle-text">The rock-solid, cross-platform framework for the native GUI.</p>
+                </div>
+                <div class="p-6 bg-brand-surface/80 backdrop-blur-sm border border-brand-border rounded-lg shadow-xl">
+                    <i class="fa-solid fa-shield-halved text-3xl text-brand-accent2 mb-3"></i>
+                    <h3 class="text-xl font-mono font-bold text-brand-text">QCA Framework</h3>
+                    <p class="mt-1 text-brand-subtle-text">Provides the robust, industry-standard AES-256 encryption engine.</p>
+                </div>
+                <div class="p-6 bg-brand-surface/80 backdrop-blur-sm border border-brand-border rounded-lg shadow-xl">
+                    <i class="fa-solid fa-leaf text-3xl text-brand-accent2 mb-3"></i>
+                    <h3 class="text-xl font-mono font-bold text-brand-text">Botan Library</h3>
+                    <p class="mt-1 text-brand-subtle-text">The powerful crypto engine underpinning the proprietary AURA protocol.</p>
+                </div>
+                <div class="p-6 bg-brand-surface/80 backdrop-blur-sm border border-brand-border rounded-lg shadow-xl">
+                    <i class="fa-solid fa-file-zipper text-3xl text-brand-accent2 mb-3"></i>
+                    <h3 class="text-xl font-mono font-bold text-brand-text">zlib</h3>
+                    <p class="mt-1 text-brand-subtle-text">The time-tested library for fast and efficient data compression.</p>
+                </div>
+                <div class="p-6 bg-brand-surface/80 backdrop-blur-sm border border-brand-border rounded-lg shadow-xl">
+                    <i class="fa-solid fa-box-archive text-3xl text-brand-accent2 mb-3"></i>
+                    <h3 class="text-xl font-mono font-bold text-brand-text">Custom .czip Format</h3>
+                    <p class="mt-1 text-brand-subtle-text">A lean container format designed specifically for the operational pipeline.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="qr-code-container">
+            <div class="p-2 bg-white rounded-md shadow-2xl">
+                <img id="qr-code" src="" alt="QR Code linking to this page">
+            </div>
+        </div>
+    </div>
+    <script src="../js/theme.js"></script>
+    <script src="../js/print_view.js"></script>
+    <script src="../js/constellation.js"></script>
+</body>
+</html>

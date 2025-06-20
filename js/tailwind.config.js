@@ -6,16 +6,16 @@ tailwind.config = {
         mono: ['Fira Code', 'monospace'],
       },
       colors: {
-        'brand-bg': '#F0F4F8', // Very light cool gray (almost white)
-        'brand-surface': '#FFFFFF', // White for card surfaces
-        'brand-text': '#1E293B', // Dark slate blue for primary text
-        'brand-subtle-text': '#475569', // Medium slate blue
-        'brand-border': '#CBD5E1', // Light gray border
-        'brand-accent1': '#0891B2', // Vibrant Cyan
-        'brand-accent2': '#EC4899', // Vibrant Pink/Magenta
-        'brand-accent3': '#F59E0B', // Amber/Bright Yellow
-        'brand-glitch-shadow1': '#EC4899', // Pink/Magenta for glitch
-        'brand-glitch-shadow2': '#0891B2', // Cyan for glitch
+        'brand-bg': 'var(--brand-bg)',
+        'brand-surface': 'var(--brand-surface)',
+        'brand-text': 'var(--brand-text)',
+        'brand-subtle-text': 'var(--brand-subtle-text)',
+        'brand-border': 'var(--brand-border)',
+        'brand-accent1': 'var(--brand-accent1)',
+        'brand-accent2': 'var(--brand-accent2)',
+        'brand-accent3': 'var(--brand-accent3)',
+        'brand-glitch-shadow1': 'var(--brand-glitch-shadow1)',
+        'brand-glitch-shadow2': 'var(--brand-glitch-shadow2)',
       },
     }
   }

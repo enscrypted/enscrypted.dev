@@ -55,9 +55,12 @@
             'fa-solid fa-robot', 'fa-solid fa-wrench', 'fa-solid fa-lightbulb',
             'fa-solid fa-gears', 'fa-solid fa-flask-vial', 'fa-solid fa-code'
         ];
+        
+        const pageHeight = document.body.scrollHeight;
+        container.style.height = `${pageHeight}px`;
+        const area = window.innerWidth * pageHeight;
 
-        const density = 0.00008;
-        const area = window.innerWidth * window.innerHeight;
+        const density = 0.00007;
         const iconCount = Math.floor(area * density);
         const fragment = document.createDocumentFragment();
 

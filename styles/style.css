@@ -368,3 +368,9 @@ html.dark .content-wrapper {
 .print-view-active .no-print {
     display: none;
 }
+
+@media (max-width: 639px) {
+  .relative.z-10.container {
+    padding-top: 4rem;
+  }
+}

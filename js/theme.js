@@ -35,3 +35,12 @@
     applyTheme();
 
 })();
+
+document.addEventListener('DOMContentLoaded', function() {
+    const mainContainer = document.querySelector('.relative.z-10.container');
+
+    if (mainContainer) {
+        mainContainer.classList.remove('p-4');
+        mainContainer.classList.add('px-4', 'pt-16', 'pb-4');
+    }
+});
